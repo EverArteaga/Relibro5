@@ -1,0 +1,1220 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Relibro5 — Comparte tu conocimiento</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,700;0,9..144,900;1,9..144,400&family=DM+Sans:wght@300;400;500;600&display=swap"
+        rel="stylesheet" />
+    <style>
+        :root {
+            --verde: #1a7a4a;
+            --verde-claro: #2eb567;
+            --crema: #f5f0e8;
+            --cafe: #3b2a1a;
+            --naranja: #e8693a;
+            --amarillo: #f5c842;
+            --blanco: #fefcf8;
+            --sombra: rgba(59, 42, 26, 0.12);
+        }
+
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--crema);
+            color: var(--cafe);
+            min-height: 100vh;
+        }
+
+        /* ── HERO ── */
+        header {
+            background: var(--verde);
+            position: relative;
+            overflow: hidden;
+            padding: 0 1.5rem;
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background:
+                radial-gradient(ellipse 60% 80% at 80% 50%, rgba(46, 181, 103, .25) 0%, transparent 70%),
+                radial-gradient(ellipse 40% 60% at 10% 80%, rgba(245, 200, 66, .12) 0%, transparent 60%);
+            pointer-events: none;
+        }
+
+        nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 1.2rem 0;
+        }
+
+        .logo {
+            font-family: 'Fraunces', serif;
+            font-size: 1.7rem;
+            font-weight: 900;
+            color: var(--blanco);
+            letter-spacing: -0.03em;
+        }
+
+        .logo span {
+            color: var(--amarillo);
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 1.8rem;
+        }
+
+        nav a {
+            color: rgba(255, 255, 255, .8);
+            text-decoration: none;
+            font-size: .9rem;
+            font-weight: 500;
+            transition: color .2s;
+        }
+
+        nav a:hover {
+            color: var(--amarillo);
+        }
+
+        .hero-inner {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 420px;
+            gap: 3rem;
+            align-items: center;
+            padding: 5rem 0 5.5rem;
+        }
+
+        .hero-text h1 {
+            font-family: 'Fraunces', serif;
+            font-size: clamp(2.4rem, 5vw, 3.8rem);
+            font-weight: 900;
+            line-height: 1.1;
+            color: var(--blanco);
+            margin-bottom: 1.2rem;
+        }
+
+        .hero-text h1 em {
+            font-style: italic;
+            color: var(--amarillo);
+        }
+
+        .hero-text p {
+            color: rgba(255, 255, 255, .75);
+            font-size: 1.05rem;
+            line-height: 1.7;
+            max-width: 420px;
+            margin-bottom: 2rem;
+        }
+
+        .btn-primary {
+            display: inline-block;
+            background: var(--amarillo);
+            color: var(--cafe);
+            font-weight: 700;
+            font-size: .95rem;
+            padding: .85rem 2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            transition: transform .15s, box-shadow .15s;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, .2);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 28px rgba(0, 0, 0, .28);
+        }
+
+        .btn-primary:active {
+            transform: translateY(0);
+        }
+
+        /* floating book illustration */
+        .hero-art {
+            position: relative;
+            height: 320px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .book-stack {
+            position: relative;
+            width: 220px;
+            height: 260px;
+            animation: float 4s ease-in-out infinite;
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0) rotate(-3deg);
+            }
+
+            50% {
+                transform: translateY(-18px) rotate(-3deg);
+            }
+        }
+
+        .book {
+            position: absolute;
+            border-radius: 4px 10px 10px 4px;
+            box-shadow: 4px 6px 20px rgba(0, 0, 0, .35);
+        }
+
+        .b1 {
+            width: 170px;
+            height: 230px;
+            background: #d94f2a;
+            bottom: 0;
+            left: 20px;
+        }
+
+        .b2 {
+            width: 160px;
+            height: 215px;
+            background: #f5c842;
+            bottom: 8px;
+            left: 30px;
+            transform: rotate(5deg);
+        }
+
+        .b3 {
+            width: 155px;
+            height: 205px;
+            background: #2eb567;
+            bottom: 16px;
+            left: 25px;
+            transform: rotate(-2deg);
+        }
+
+        .b4 {
+            width: 158px;
+            height: 210px;
+            background: #3a7fc1;
+            bottom: 12px;
+            left: 22px;
+            transform: rotate(2deg);
+        }
+
+        .book::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 14px;
+            background: rgba(0, 0, 0, .2);
+            border-radius: 4px 0 0 4px;
+        }
+
+        .hearts {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+        }
+
+        .heart {
+            position: absolute;
+            font-size: 1.4rem;
+            animation: rise 3s ease-in infinite;
+            opacity: 0;
+        }
+
+        .heart:nth-child(1) {
+            left: 20%;
+            animation-delay: 0s;
+        }
+
+        .heart:nth-child(2) {
+            left: 55%;
+            animation-delay: 1s;
+        }
+
+        .heart:nth-child(3) {
+            left: 80%;
+            animation-delay: 2s;
+        }
+
+        @keyframes rise {
+            0% {
+                opacity: 0;
+                transform: translateY(260px) scale(.8);
+            }
+
+            20% {
+                opacity: 1;
+            }
+
+            100% {
+                opacity: 0;
+                transform: translateY(-20px) scale(1.2);
+            }
+        }
+
+        /* ── STATS ── */
+        .stats-bar {
+            background: var(--cafe);
+            padding: 1.5rem;
+        }
+
+        .stats-inner {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: flex;
+            gap: 2rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .stat {
+            text-align: center;
+            color: var(--blanco);
+        }
+
+        .stat strong {
+            display: block;
+            font-family: 'Fraunces', serif;
+            font-size: 2rem;
+            font-weight: 900;
+            color: var(--amarillo);
+        }
+
+        .stat span {
+            font-size: .85rem;
+            opacity: .7;
+        }
+
+        /* ── SECTIONS ── */
+        main {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        section {
+            padding: 4rem 0;
+        }
+
+        .section-title {
+            font-family: 'Fraunces', serif;
+            font-size: 2rem;
+            font-weight: 900;
+            margin-bottom: .5rem;
+            color: var(--cafe);
+        }
+
+        .section-sub {
+            color: #6b5a4a;
+            font-size: .95rem;
+            margin-bottom: 2.5rem;
+        }
+
+        /* ── SEARCH ── */
+        .search-wrap {
+            display: flex;
+            gap: .7rem;
+            margin-bottom: 2.5rem;
+            flex-wrap: wrap;
+        }
+
+        .search-wrap input,
+        .search-wrap select {
+            padding: .75rem 1.1rem;
+            border: 2px solid #d9d0c4;
+            border-radius: 50px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: .9rem;
+            background: var(--blanco);
+            color: var(--cafe);
+            outline: none;
+            transition: border-color .2s;
+        }
+
+        .search-wrap input {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .search-wrap input:focus,
+        .search-wrap select:focus {
+            border-color: var(--verde-claro);
+        }
+
+        .search-wrap button {
+            padding: .75rem 1.6rem;
+            background: var(--verde);
+            color: #fff;
+            border: none;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            font-family: 'DM Sans', sans-serif;
+            transition: background .2s;
+        }
+
+        .search-wrap button:hover {
+            background: var(--verde-claro);
+        }
+
+        /* ── BOOK CARDS ── */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .card {
+            background: var(--blanco);
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 2px 12px var(--sombra);
+            transition: transform .2s, box-shadow .2s;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 32px var(--sombra);
+        }
+
+        .card-img {
+            height: 160px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            position: relative;
+        }
+
+        .badge {
+            position: absolute;
+            top: .6rem;
+            right: .6rem;
+            background: var(--verde);
+            color: #fff;
+            font-size: .7rem;
+            font-weight: 700;
+            padding: .2rem .55rem;
+            border-radius: 20px;
+            text-transform: uppercase;
+            letter-spacing: .04em;
+        }
+
+        .badge.usado {
+            background: var(--naranja);
+        }
+
+        .badge.nuevo {
+            background: var(--verde);
+        }
+
+        .card-body {
+            padding: 1.1rem;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card-body h3 {
+            font-family: 'Fraunces', serif;
+            font-size: 1.05rem;
+            font-weight: 700;
+            margin-bottom: .3rem;
+            line-height: 1.3;
+        }
+
+        .card-body .autor {
+            font-size: .82rem;
+            color: #7a6a58;
+            margin-bottom: .5rem;
+        }
+
+        .card-body .materia {
+            font-size: .78rem;
+            background: #eee8df;
+            color: var(--cafe);
+            padding: .15rem .55rem;
+            border-radius: 20px;
+            display: inline-block;
+            font-weight: 500;
+            margin-bottom: .6rem;
+        }
+
+        .card-body .desc {
+            font-size: .83rem;
+            color: #6b5a4a;
+            line-height: 1.5;
+            flex: 1;
+        }
+
+        .card-footer {
+            padding: .8rem 1.1rem 1.1rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .donante {
+            font-size: .8rem;
+            color: #7a6a58;
+        }
+
+        .donante strong {
+            color: var(--cafe);
+        }
+
+        .btn-quiero {
+            background: var(--verde);
+            color: #fff;
+            border: none;
+            padding: .45rem 1rem;
+            border-radius: 50px;
+            font-size: .82rem;
+            font-weight: 600;
+            cursor: pointer;
+            font-family: 'DM Sans', sans-serif;
+            transition: background .2s;
+        }
+
+        .btn-quiero:hover {
+            background: var(--verde-claro);
+        }
+
+        /* ── MODAL REQUEST ── */
+        .overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(30, 20, 10, .55);
+            backdrop-filter: blur(4px);
+            z-index: 100;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .overlay.active {
+            display: flex;
+        }
+
+        .modal {
+            background: var(--blanco);
+            border-radius: 20px;
+            padding: 2.5rem;
+            width: min(480px, 92vw);
+            box-shadow: 0 24px 64px rgba(0, 0, 0, .3);
+            position: relative;
+            animation: pop .25s cubic-bezier(.34, 1.56, .64, 1);
+        }
+
+        @keyframes pop {
+            from {
+                transform: scale(.85);
+                opacity: 0;
+            }
+
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 1rem;
+            right: 1.2rem;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #aaa;
+        }
+
+        .modal-close:hover {
+            color: var(--cafe);
+        }
+
+        .modal h2 {
+            font-family: 'Fraunces', serif;
+            font-size: 1.5rem;
+            margin-bottom: .4rem;
+        }
+
+        .modal p {
+            font-size: .88rem;
+            color: #6b5a4a;
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: .83rem;
+            font-weight: 600;
+            margin-bottom: .35rem;
+            color: var(--cafe);
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: .7rem 1rem;
+            border: 2px solid #d9d0c4;
+            border-radius: 10px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: .9rem;
+            background: var(--crema);
+            color: var(--cafe);
+            outline: none;
+            transition: border-color .2s;
+            resize: vertical;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            border-color: var(--verde-claro);
+            background: var(--blanco);
+        }
+
+        .btn-submit {
+            width: 100%;
+            padding: .9rem;
+            background: var(--verde);
+            color: #fff;
+            border: none;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            font-family: 'DM Sans', sans-serif;
+            transition: background .2s, transform .15s;
+            margin-top: .5rem;
+        }
+
+        .btn-submit:hover {
+            background: var(--verde-claro);
+            transform: translateY(-1px);
+        }
+
+        /* ── DONATE SECTION ── */
+        #donar {
+            background: var(--verde);
+            border-radius: 24px;
+            padding: 3.5rem;
+            margin: 2rem 0;
+        }
+
+        #donar .section-title {
+            color: var(--blanco);
+        }
+
+        #donar .section-sub {
+            color: rgba(255, 255, 255, .75);
+        }
+
+        .donate-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+
+        @media (max-width: 680px) {
+            .donate-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .donate-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .donate-form input,
+        .donate-form select,
+        .donate-form textarea {
+            padding: .75rem 1rem;
+            border: 2px solid rgba(255, 255, 255, .25);
+            border-radius: 12px;
+            background: rgba(255, 255, 255, .12);
+            color: var(--blanco);
+            font-family: 'DM Sans', sans-serif;
+            font-size: .9rem;
+            outline: none;
+            transition: border-color .2s, background .2s;
+            resize: vertical;
+        }
+
+        .donate-form input::placeholder,
+        .donate-form textarea::placeholder {
+            color: rgba(255, 255, 255, .5);
+        }
+
+        .donate-form input:focus,
+        .donate-form select:focus,
+        .donate-form textarea:focus {
+            border-color: var(--amarillo);
+            background: rgba(255, 255, 255, .2);
+        }
+
+        .donate-form select option {
+            color: var(--cafe);
+            background: var(--blanco);
+        }
+
+        .btn-donar {
+            padding: .85rem;
+            background: var(--amarillo);
+            color: var(--cafe);
+            border: none;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            font-family: 'DM Sans', sans-serif;
+            transition: transform .15s, box-shadow .15s;
+        }
+
+        .btn-donar:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 24px rgba(0, 0, 0, .25);
+        }
+
+        .why-donate {
+            display: flex;
+            flex-direction: column;
+            gap: 1.4rem;
+        }
+
+        .why-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+        }
+
+        .why-icon {
+            width: 44px;
+            height: 44px;
+            background: rgba(255, 255, 255, .15);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            flex-shrink: 0;
+        }
+
+        .why-text h4 {
+            color: var(--blanco);
+            font-size: .95rem;
+            font-weight: 600;
+            margin-bottom: .2rem;
+        }
+
+        .why-text p {
+            color: rgba(255, 255, 255, .65);
+            font-size: .83rem;
+            line-height: 1.5;
+        }
+
+        /* ── HOW IT WORKS ── */
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .step {
+            background: var(--blanco);
+            border-radius: 16px;
+            padding: 1.8rem;
+            box-shadow: 0 2px 12px var(--sombra);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .step::before {
+            content: attr(data-n);
+            position: absolute;
+            top: -10px;
+            right: 10px;
+            font-family: 'Fraunces', serif;
+            font-size: 5rem;
+            font-weight: 900;
+            color: rgba(59, 42, 26, .05);
+            line-height: 1;
+            pointer-events: none;
+        }
+
+        .step-icon {
+            font-size: 2rem;
+            margin-bottom: .8rem;
+        }
+
+        .step h3 {
+            font-family: 'Fraunces', serif;
+            font-size: 1.1rem;
+            margin-bottom: .4rem;
+        }
+
+        .step p {
+            font-size: .84rem;
+            color: #6b5a4a;
+            line-height: 1.6;
+        }
+
+        /* ── TOAST ── */
+        .toast {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background: var(--verde);
+            color: #fff;
+            padding: 1rem 1.5rem;
+            border-radius: 14px;
+            font-weight: 600;
+            font-size: .9rem;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, .25);
+            transform: translateY(80px);
+            opacity: 0;
+            transition: transform .3s, opacity .3s;
+            z-index: 200;
+            max-width: 320px;
+        }
+
+        .toast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        /* ── FOOTER ── */
+        footer {
+            background: var(--cafe);
+            color: rgba(255, 255, 255, .6);
+            text-align: center;
+            padding: 2rem 1.5rem;
+            font-size: .82rem;
+            margin-top: 4rem;
+        }
+
+        footer strong {
+            color: var(--amarillo);
+        }
+
+        /* ── RESPONSIVE ── */
+        @media (max-width: 760px) {
+            .hero-inner {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-art {
+                display: none;
+            }
+
+            nav ul {
+                display: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ─ HEADER ─────────────────────────────── -->
+    <header>
+        <nav>
+            <div class="logo">Re<span>libro</span>5</div>
+            <ul>
+                <li><a href="#libros">Libros</a></li>
+                <li><a href="#donar">Regalar libro</a></li>
+                <li><a href="#como">¿Cómo funciona?</a></li>
+            </ul>
+        </nav>
+
+        <div class="hero-inner">
+            <div class="hero-text">
+                <h1>Regala <em>conocimiento,</em><br>recibe oportunidades</h1>
+                <p>La plataforma del CECyT 5 donde los estudiantes comparten sus libros con quienes más los necesitan.
+                    Gratis, fácil y en comunidad.</p>
+                <a href="#libros" class="btn-primary">🔍 Explorar libros</a>
+                &nbsp;&nbsp;
+                <a href="#donar" class="btn-primary"
+                    style="background:transparent;border:2px solid rgba(255,255,255,.5);color:#fff;">📚 Regalar un
+                    libro</a>
+            </div>
+            <div class="hero-art">
+                <div class="book-stack">
+                    <div class="book b1"></div>
+                    <div class="book b2"></div>
+                    <div class="book b3"></div>
+                    <div class="book b4"></div>
+                </div>
+                <div class="hearts">
+                    <div class="heart">💚</div>
+                    <div class="heart">📖</div>
+                    <div class="heart">✨</div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- ─ STATS ──────────────────────────────── -->
+    <div class="stats-bar">
+        <div class="stats-inner">
+            <div class="stat"><strong id="stat-libros">0</strong><span>Libros disponibles</span></div>
+            <div class="stat"><strong id="stat-donados">0</strong><span>Libros donados</span></div>
+            <div class="stat"><strong id="stat-alumnos">0</strong><span>Alumnos beneficiados</span></div>
+            <div class="stat"><strong id="stat-materias">0</strong><span>Materias cubiertas</span></div>
+        </div>
+    </div>
+
+    <!-- ─ MAIN ───────────────────────────────── -->
+    <main>
+
+        <!-- LIBROS DISPONIBLES -->
+        <section id="libros">
+            <h2 class="section-title">📚 Libros disponibles</h2>
+            <p class="section-sub">Encuentra el libro que necesitas y contáctate con quien lo ofrece.</p>
+
+            <div class="search-wrap">
+                <input type="text" id="searchInput" placeholder="Buscar por título, autor o materia…" />
+                <select id="filterMateria">
+                    <option value="">Todas las materias</option>
+                    <option>Matemáticas</option>
+                    <option>Física</option>
+                    <option>Química</option>
+                    <option>Biología</option>
+                    <option>Historia</option>
+                    <option>Español</option>
+                    <option>Inglés</option>
+                    <option>Informática</option>
+                    <option>Filosofía</option>
+                    <option>Otro</option>
+                </select>
+                <select id="filterEstado">
+                    <option value="">Cualquier estado</option>
+                    <option>Nuevo</option>
+                    <option>Usado</option>
+                </select>
+                <button onclick="filtrarLibros()">Buscar</button>
+            </div>
+
+            <div class="cards-grid" id="cardsGrid"></div>
+        </section>
+
+        <!-- CÓMO FUNCIONA -->
+        <section id="como">
+            <h2 class="section-title">🧭 ¿Cómo funciona?</h2>
+            <p class="section-sub">En tres pasos sencillos, el conocimiento viaja de mochila en mochila.</p>
+            <div class="steps">
+                <div class="step" data-n="1">
+                    <div class="step-icon">📬</div>
+                    <h3>Regala tu libro</h3>
+                    <p>Llena el formulario con los datos de tu libro, en qué semestre lo usaste y tu nombre. Lo
+                        publicamos al instante.</p>
+                </div>
+                <div class="step" data-n="2">
+                    <div class="step-icon">🔎</div>
+                    <h3>Encuentra el que necesitas</h3>
+                    <p>Busca por materia, título o autor y encuentra el libro que te ayudará este semestre sin gastar.
+                    </p>
+                </div>
+                <div class="step" data-n="3">
+                    <div class="step-icon">🤝</div>
+                    <h3>Haz el intercambio</h3>
+                    <p>Solicita el libro y nos pondremos en contacto para coordinar la entrega directamente en el
+                        plantel.</p>
+                </div>
+                <div class="step" data-n="4">
+                    <div class="step-icon">🌱</div>
+                    <h3>La cadena sigue</h3>
+                    <p>Cuando termines el semestre, regala ese libro a otro estudiante. ¡El ciclo continúa!</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- DONAR LIBRO -->
+        <div id="donar">
+            <h2 class="section-title">📖 Regala tu libro</h2>
+            <p class="section-sub">¿Ya pasaste esa materia? Dale una segunda vida a tu libro y ayuda a un compañero.</p>
+
+            <div class="donate-grid">
+                <div class="donate-form" id="donateForm">
+                    <input type="text" id="d-titulo" placeholder="Título del libro *" />
+                    <input type="text" id="d-autor" placeholder="Autor *" />
+                    <select id="d-materia">
+                        <option value="">Selecciona la materia *</option>
+                        <option>Matemáticas</option>
+                        <option>Física</option>
+                        <option>Química</option>
+                        <option>Biología</option>
+                        <option>Historia</option>
+                        <option>Español</option>
+                        <option>Inglés</option>
+                        <option>Informática</option>
+                        <option>Filosofía</option>
+                        <option>Otro</option>
+                    </select>
+                    <select id="d-estado">
+                        <option value="">Estado del libro *</option>
+                        <option>Nuevo</option>
+                        <option>Usado</option>
+                    </select>
+                    <input type="text" id="d-semestre" placeholder="Semestre en que se usa (ej: 2°)" />
+                    <input type="text" id="d-nombre" placeholder="Tu nombre (donante) *" />
+                    <textarea id="d-desc" rows="3" placeholder="Descripción breve (opcional)…"></textarea>
+                    <button class="btn-donar" onclick="publicarLibro()">🎁 Publicar libro gratis</button>
+                </div>
+
+                <div class="why-donate">
+                    <div class="why-item">
+                        <div class="why-icon">💸</div>
+                        <div class="why-text">
+                            <h4>Ahorra dinero</h4>
+                            <p>Los libros de preparatoria pueden costar mucho. Aquí los consigues gratis entre
+                                compañeros.</p>
+                        </div>
+                    </div>
+                    <div class="why-item">
+                        <div class="why-icon">♻️</div>
+                        <div class="why-text">
+                            <h4>Cuida el planeta</h4>
+                            <p>Reusar libros reduce el consumo de papel y ayuda al medio ambiente.</p>
+                        </div>
+                    </div>
+                    <div class="why-item">
+                        <div class="why-icon">🤝</div>
+                        <div class="why-text">
+                            <h4>Fortalece la comunidad</h4>
+                            <p>Construimos una comunidad CECyT 5 más solidaria donde todos nos apoyamos.</p>
+                        </div>
+                    </div>
+                    <div class="why-item">
+                        <div class="why-icon">🏆</div>
+                        <div class="why-text">
+                            <h4>Reconocimiento</h4>
+                            <p>Los mejores donantes del semestre serán reconocidos en el plantel.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- ─ FOOTER ──────────────────────────────── -->
+    <footer>
+        <p><strong>Relibro5</strong> — Plataforma solidaria del <strong>CECyT 5 "Plantel Ramos Millán"</strong>, IPN
+            &nbsp;·&nbsp; Hecha con 💚 por y para estudiantes</p>
+    </footer>
+
+    <!-- ─ MODAL SOLICITUD ─────────────────────── -->
+    <div class="overlay" id="overlay">
+        <div class="modal">
+            <button class="modal-close" onclick="cerrarModal()">×</button>
+            <h2>¿Quieres este libro?</h2>
+            <p id="modalLibroInfo">Déjanos tus datos y nos ponemos en contacto.</p>
+            <div class="form-group">
+                <label>Tu nombre completo</label>
+                <input type="text" id="sol-nombre" placeholder="Nombre y apellido" />
+            </div>
+            <div class="form-group">
+                <label>Correo o número de WhatsApp</label>
+                <input type="text" id="sol-contacto" placeholder="correo@alumno.ipn.mx o 55 1234 5678" />
+            </div>
+            <div class="form-group">
+                <label>Semestre actual</label>
+                <input type="text" id="sol-semestre" placeholder="Ej: 3° semestre" />
+            </div>
+            <div class="form-group">
+                <label>Mensaje (opcional)</label>
+                <textarea id="sol-msg" rows="2" placeholder="¿Algo que quieras decirle al donante?"></textarea>
+            </div>
+            <button class="btn-submit" onclick="enviarSolicitud()">📩 Enviar solicitud</button>
+        </div>
+    </div>
+
+    <!-- ─ TOAST ───────────────────────────────── -->
+    <div class="toast" id="toast"></div>
+
+    <!-- ─ SCRIPT ──────────────────────────────── -->
+    <script>
+        // ── DATOS INICIALES ──────────────────────────────────────────────────────
+        const COLORES_BG = ['#fde8e0', '#e8f5ee', '#fef9e0', '#e0ecf8', '#f3e8f5', '#fff5e0'];
+        const EMOJIS = ['📗', '📘', '📙', '📕', '📓', '📔', '📒'];
+
+        let libros = [
+            { id: 1, titulo: 'Cálculo Diferencial e Integral', autor: 'Stewart', materia: 'Matemáticas', estado: 'Usado', semestre: '2°', donante: 'Carlos M.', desc: 'Buen estado, algunas anotaciones útiles al margen.', emoji: '📗', bg: '#e8f5ee' },
+            { id: 2, titulo: 'Física Universitaria', autor: 'Sears & Zemansky', materia: 'Física', estado: 'Nuevo', semestre: '3°', donante: 'Sofía R.', desc: 'Sin uso, lo compré de más. Incluye acceso digital.', emoji: '📘', bg: '#e0ecf8' },
+            { id: 3, titulo: 'Química: La Ciencia Central', autor: 'Brown et al.', materia: 'Química', estado: 'Usado', semestre: '1°', donante: 'Miguel T.', desc: 'Le faltan 2 páginas al final pero el contenido está completo.', emoji: '📙', bg: '#fef9e0' },
+            { id: 4, titulo: 'Biología', autor: 'Campbell & Reece', materia: 'Biología', estado: 'Nuevo', semestre: '4°', donante: 'Valentina G.', desc: 'Perfecto estado, lo usé solo un par de veces.', emoji: '📕', bg: '#fde8e0' },
+            { id: 5, titulo: 'Historia de México', autor: 'Vázquez Zoraida', materia: 'Historia', estado: 'Usado', semestre: '2°', donante: 'Diego H.', desc: 'Subrayado con pluma azul, ayuda bastante para estudiar.', emoji: '📓', bg: '#f3e8f5' },
+            { id: 6, titulo: 'Fundamentos de Programación', autor: 'Joyanes Aguilar', materia: 'Informática', estado: 'Usado', semestre: '3°', donante: 'Andrea L.', desc: 'Ejercicios resueltos a lápiz. Muy útil.', emoji: '📔', bg: '#fff5e0' },
+        ];
+
+        let libroSeleccionado = null;
+
+        // ── RENDER ────────────────────────────────────────────────────────────────
+        function renderLibros(lista) {
+            const grid = document.getElementById('cardsGrid');
+            if (!lista.length) {
+                grid.innerHTML = '<p style="grid-column:1/-1;text-align:center;color:#7a6a58;padding:3rem 0">😕 No se encontraron libros con ese filtro.</p>';
+                return;
+            }
+            grid.innerHTML = lista.map(l => `
+      <div class="card" onclick="abrirModal(${l.id})">
+        <div class="card-img" style="background:${l.bg}">
+          <span>${l.emoji}</span>
+          <span class="badge ${l.estado.toLowerCase()}">${l.estado}</span>
+        </div>
+        <div class="card-body">
+          <h3>${l.titulo}</h3>
+          <div class="autor">${l.autor}</div>
+          <span class="materia">${l.materia}</span>
+          <p class="desc">${l.desc}</p>
+        </div>
+        <div class="card-footer">
+          <div class="donante">Por <strong>${l.donante}</strong><br>Semestre: ${l.semestre}</div>
+          <button class="btn-quiero" onclick="event.stopPropagation();abrirModal(${l.id})">Lo quiero</button>
+        </div>
+      </div>
+    `).join('');
+            actualizarStats();
+        }
+
+        function filtrarLibros() {
+            const q = document.getElementById('searchInput').value.toLowerCase();
+            const m = document.getElementById('filterMateria').value;
+            const e = document.getElementById('filterEstado').value;
+            const r = libros.filter(l =>
+                (!q || l.titulo.toLowerCase().includes(q) || l.autor.toLowerCase().includes(q) || l.materia.toLowerCase().includes(q)) &&
+                (!m || l.materia === m) &&
+                (!e || l.estado === e)
+            );
+            renderLibros(r);
+        }
+
+        document.getElementById('searchInput').addEventListener('keyup', e => { if (e.key === 'Enter') filtrarLibros(); });
+
+        // ── STATS ─────────────────────────────────────────────────────────────────
+        function actualizarStats() {
+            animCount('stat-libros', libros.length);
+            animCount('stat-donados', libros.length + 14);
+            animCount('stat-alumnos', libros.length + 11);
+            animCount('stat-materias', [...new Set(libros.map(l => l.materia))].length);
+        }
+        function animCount(id, target) {
+            const el = document.getElementById(id);
+            let n = 0;
+            const step = Math.ceil(target / 40);
+            const t = setInterval(() => {
+                n = Math.min(n + step, target);
+                el.textContent = n;
+                if (n >= target) clearInterval(t);
+            }, 30);
+        }
+
+        // ── PUBLICAR LIBRO ────────────────────────────────────────────────────────
+        function publicarLibro() {
+            const titulo = document.getElementById('d-titulo').value.trim();
+            const autor = document.getElementById('d-autor').value.trim();
+            const materia = document.getElementById('d-materia').value;
+            const estado = document.getElementById('d-estado').value;
+            const semestre = document.getElementById('d-semestre').value.trim() || '?';
+            const nombre = document.getElementById('d-nombre').value.trim();
+            const desc = document.getElementById('d-desc').value.trim() || 'Sin descripción adicional.';
+
+            if (!titulo || !autor || !materia || !estado || !nombre) {
+                mostrarToast('⚠️ Por favor llena los campos obligatorios.', '#c0392b');
+                return;
+            }
+
+            const nuevo = {
+                id: Date.now(),
+                titulo, autor, materia, estado, semestre, donante: nombre, desc,
+                emoji: EMOJIS[Math.floor(Math.random() * EMOJIS.length)],
+                bg: COLORES_BG[Math.floor(Math.random() * COLORES_BG.length)]
+            };
+            libros.unshift(nuevo);
+            renderLibros(libros);
+
+            // limpiar
+            ['d-titulo', 'd-autor', 'd-semestre', 'd-nombre', 'd-desc'].forEach(id => document.getElementById(id).value = '');
+            document.getElementById('d-materia').value = '';
+            document.getElementById('d-estado').value = '';
+
+            mostrarToast('🎉 ¡Libro publicado! Gracias por compartir, ' + nombre + '.');
+            document.getElementById('libros').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // ── MODAL ─────────────────────────────────────────────────────────────────
+        function abrirModal(id) {
+            libroSeleccionado = libros.find(l => l.id === id);
+            document.getElementById('modalLibroInfo').textContent =
+                `"${libroSeleccionado.titulo}" — ofrecido por ${libroSeleccionado.donante}. Llena tus datos y lo coordinamos.`;
+            document.getElementById('overlay').classList.add('active');
+            document.getElementById('sol-nombre').focus();
+        }
+        function cerrarModal() {
+            document.getElementById('overlay').classList.remove('active');
+            libroSeleccionado = null;
+        }
+        document.getElementById('overlay').addEventListener('click', e => {
+            if (e.target === document.getElementById('overlay')) cerrarModal();
+        });
+
+        function enviarSolicitud() {
+            const nombre = document.getElementById('sol-nombre').value.trim();
+            const contacto = document.getElementById('sol-contacto').value.trim();
+            if (!nombre || !contacto) {
+                mostrarToast('⚠️ Nombre y contacto son requeridos.', '#c0392b');
+                return;
+            }
+            cerrarModal();
+            mostrarToast('📩 ¡Solicitud enviada! El donante se comunicará contigo pronto, ' + nombre + '.');
+            // Limpiar campos
+            ['sol-nombre', 'sol-contacto', 'sol-semestre', 'sol-msg'].forEach(id => document.getElementById(id).value = '');
+        }
+
+        // ── TOAST ─────────────────────────────────────────────────────────────────
+        function mostrarToast(msg, bg = '#1a7a4a') {
+            const t = document.getElementById('toast');
+            t.textContent = msg;
+            t.style.background = bg;
+            t.classList.add('show');
+            setTimeout(() => t.classList.remove('show'), 4000);
+        }
+
+        // ── INIT ──────────────────────────────────────────────────────────────────
+        renderLibros(libros);
+    </script>
+</body>
+
+</html>
