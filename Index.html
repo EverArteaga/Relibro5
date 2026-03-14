@@ -22,6 +22,126 @@
             --shadow: rgba(107, 16, 32, 0.13);
         }
 
+        /* ── TEMA OSCURO ── */
+        body.dark {
+            --cream: #1a0f11;
+            --white: #26161b;
+            --text: #f5e8ec;
+            --muted: #c8a0b0;
+            --border: #3d1f28;
+            --shadow: rgba(0, 0, 0, 0.4);
+        }
+
+        /* ── PANEL DE CONFIGURACIÓN ── */
+        .config-btn {
+            background: rgba(255,255,255,.15);
+            border: 1px solid rgba(255,255,255,.3);
+            color: var(--white);
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            font-size: 1.1rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-left: 8px;
+            transition: background .2s, transform .3s;
+        }
+        .config-btn:hover { background: rgba(255,255,255,.25); transform: rotate(30deg); }
+
+        .config-panel {
+            position: fixed;
+            top: 0; right: -320px;
+            width: 300px;
+            height: 100vh;
+            background: var(--white);
+            box-shadow: -6px 0 40px rgba(74,10,22,.25);
+            z-index: 600;
+            transition: right .35s cubic-bezier(.34,1.56,.64,1);
+            padding: 32px 28px;
+            display: flex;
+            flex-direction: column;
+            gap: 28px;
+        }
+        .config-panel.open { right: 0; }
+
+        .config-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(74,10,22,.35);
+            backdrop-filter: blur(4px);
+            z-index: 590;
+            display: none;
+        }
+        .config-overlay.open { display: block; }
+
+        .config-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .config-header h3 {
+            font-family: 'DM Serif Display', serif;
+            font-size: 1.4rem;
+            color: var(--guinda-dark);
+        }
+        .config-close {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #ccc;
+            line-height: 1;
+        }
+        .config-close:hover { color: var(--guinda); }
+
+        .config-section label {
+            font-size: .78rem;
+            font-weight: 700;
+            color: var(--guinda);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            display: block;
+            margin-bottom: 14px;
+        }
+
+        .theme-options {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+        .theme-card {
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            padding: 14px 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: border-color .2s, transform .15s;
+            font-size: .82rem;
+            font-weight: 600;
+            color: var(--muted);
+        }
+        .theme-card:hover { transform: translateY(-2px); border-color: var(--guinda-light); }
+        .theme-card.selected { border-color: var(--guinda); color: var(--guinda); }
+        .theme-card .theme-icon { font-size: 1.8rem; display: block; margin-bottom: 6px; }
+
+        body.dark .config-panel { background: #26161b; }
+        body.dark .config-header h3 { color: #f5e8ec; }
+        body.dark .theme-card { color: #c8a0b0; border-color: #3d1f28; }
+        body.dark .theme-card.selected { border-color: #FFCDD5; color: #FFCDD5; }
+        body.dark .config-close { color: #7a6070; }
+        body.dark .config-close:hover { color: #FFCDD5; }
+
+        /* Indicador de error en campo de correo */
+        .field-error {
+            font-size: .75rem;
+            color: #c0392b;
+            margin-top: 4px;
+            display: none;
+        }
+        .form-input.invalid { border-color: #c0392b !important; }
+
         *,
         *::before,
         *::after {
@@ -992,7 +1112,28 @@
         <div id="navAuth">
             <button class="btn-login" onclick="showPage('auth')">Ingresar</button>
         </div>
+        <button class="config-btn" onclick="abrirConfig()" title="Configuración">⚙️</button>
     </nav>
+
+    <!-- PANEL CONFIGURACIÓN -->
+    <div class="config-overlay" id="configOverlay" onclick="cerrarConfig()"></div>
+    <div class="config-panel" id="configPanel">
+        <div class="config-header">
+            <h3>Configuración</h3>
+            <button class="config-close" onclick="cerrarConfig()">×</button>
+        </div>
+        <div class="config-section">
+            <label>🎨 Tema de la interfaz</label>
+            <div class="theme-options">
+                <div class="theme-card selected" id="theme-light" onclick="setTheme('light')">
+                    <span class="theme-icon">☀️</span>Claro
+                </div>
+                <div class="theme-card" id="theme-dark" onclick="setTheme('dark')">
+                    <span class="theme-icon">🌙</span>Oscuro
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- ═══════════ INICIO ═══════════ -->
     <div class="page active" id="page-inicio">
@@ -1213,7 +1354,8 @@
                     </div>
                     <div class="form-group">
                         <label class="form-label">Correo *</label>
-                        <input class="form-input" type="email" id="r-email" placeholder="correo@alumno.ipn.mx" />
+                        <input class="form-input" type="email" id="r-email" placeholder="correo@alumno.ipn.mx" oninput="validarCorreoIPN(this)" />
+                        <span class="field-error" id="r-email-error">⚠️ Debes usar un correo institucional terminado en .ipn.mx</span>
                     </div>
                     <div class="form-group">
                         <label class="form-label">Contraseña *</label>
@@ -1303,6 +1445,44 @@
     </footer>
 
     <script>
+        // ── CONFIGURACIÓN
+        function abrirConfig() {
+            document.getElementById('configPanel').classList.add('open');
+            document.getElementById('configOverlay').classList.add('open');
+        }
+        function cerrarConfig() {
+            document.getElementById('configPanel').classList.remove('open');
+            document.getElementById('configOverlay').classList.remove('open');
+        }
+        function setTheme(theme) {
+            if (theme === 'dark') {
+                document.body.classList.add('dark');
+            } else {
+                document.body.classList.remove('dark');
+            }
+            document.getElementById('theme-light').classList.toggle('selected', theme === 'light');
+            document.getElementById('theme-dark').classList.toggle('selected', theme === 'dark');
+            localStorage.setItem('relibro5-theme', theme);
+        }
+        // Restaurar tema guardado
+        (function() {
+            const saved = localStorage.getItem('relibro5-theme');
+            if (saved === 'dark') setTheme('dark');
+        })();
+
+        // ── VALIDACIÓN CORREO IPN
+        function validarCorreoIPN(input) {
+            const val = input.value.trim().toLowerCase();
+            const errorEl = document.getElementById('r-email-error');
+            if (val && !val.endsWith('.ipn.mx')) {
+                input.classList.add('invalid');
+                errorEl.style.display = 'block';
+            } else {
+                input.classList.remove('invalid');
+                errorEl.style.display = 'none';
+            }
+        }
+
         let user = null;
         let libroActivo = null;
         let fotoPreviewData = null;
@@ -1350,9 +1530,14 @@
         function handleRegister() {
             const nombre = document.getElementById('r-nombre').value.trim();
             const boleta = document.getElementById('r-boleta').value.trim();
-            const email = document.getElementById('r-email').value.trim();
+            const email = document.getElementById('r-email').value.trim().toLowerCase();
             const pass = document.getElementById('r-pass').value;
-            if (!nombre || !boleta || !email || !pass) return showToast('Completa todos los campos');
+            if (!nombre || !boleta || !email || !pass) return showToast('⚠️ Completa todos los campos');
+            if (!email.endsWith('.ipn.mx')) {
+                document.getElementById('r-email').classList.add('invalid');
+                document.getElementById('r-email-error').style.display = 'block';
+                return showToast('⚠️ Usa tu correo institucional (.ipn.mx)');
+            }
             user = { nombre, email };
             updateNav();
             showToast('¡Cuenta creada exitosamente! 🎉', '#1a7a4a');
